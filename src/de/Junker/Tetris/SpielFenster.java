@@ -1,7 +1,5 @@
 package de.Junker.Tetris;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,42 +12,7 @@ public class SpielFenster extends Frame {
     private JLabel Punktzahl;
     private JLabel Level;
     private JLabel Reihen;
-    public SpielFenster() {
-        //TODO: Fenstername festlegen
-        super("tetris");
-        //TODO: Größe Festlegen
-        this.setSize(768,512);
-        //TODO: Spielfeld einfügen
-
-        //TODO: Punktelabel
-        Punktzahl = new JLabel("Punkte: 0");
-        //TODO: Levellabel
-        Level = new JLabel("Level: 1");
-        //TODO: ReihenLabel
-        Reihen = new JLabel("Reihen: 0");
-        //TODO: Hold
-        //TODO: Next
-        //TODO: Highscore
-
-        //TODO: Postionen festlegen
-        Punktzahl.setLocation(100,100);
-        Level.setLocation(100,200);
-        Reihen.setLocation(100,300);
-
-        //TODO: Komponenten hinzufügen
-        this.add(Punktzahl);
-        this.add(Level);
-        this.add(Reihen);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-                System.exit(0);
-            }
-        });
-    }
-
-
+    private Spielfeld spielfeld;
     KeyListener keyListener = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent keyEvent) {
@@ -58,10 +21,14 @@ public class SpielFenster extends Frame {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
+            System.out.println(keyEvent.getKeyCode());
             switch (keyEvent.getKeyCode()) {
-                case 39:
+                case 37:
+                    spielfeld.moveLeft();
                     break;
-                    //TODO: get keycodes from config/link to functions
+                case 39:
+                    spielfeld.moveRight();
+                    break;
             }
         }
 
@@ -70,6 +37,33 @@ public class SpielFenster extends Frame {
             //NOOP
         }
     };
+
+
+    public SpielFenster() {
+        super("Testris");
+        this.setSize(768, 512);
+        spielfeld = new Spielfeld(10, 40);
+        Punktzahl = new JLabel("Punkte:");
+        Level = new JLabel("Level:");
+        Reihen = new JLabel("Reihen:");
+        this.setResizable(false);
+        Punktzahl.setBounds(50, 55, 100, 10);
+        Level.setBounds(50, 75, 100, 10);
+        Reihen.setBounds(50, 95, 100, 10);
+        this.add(Punktzahl);
+        this.add(Level);
+        this.add(Reihen);
+        //Leeres Label weil das letzte aus irgendeinem grund nicht die gewünschte position annimmt
+        this.add(new JLabel(""));
+        this.addKeyListener(keyListener);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
+    }
 
     //Funktion zum aufrufen des Spielfensters
     public void Start() {
