@@ -7,8 +7,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static java.awt.Color.black;
-import static java.awt.Color.white;
 
 
 public class SpielFenster extends Frame {
@@ -25,7 +23,6 @@ public class SpielFenster extends Frame {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
-            System.out.println(keyEvent.getKeyCode());
             switch (keyEvent.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     spielfeld.moveLeft();
@@ -38,6 +35,9 @@ public class SpielFenster extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     spielfeld.softDrop();
+                    break;
+                case KeyEvent.VK_ENTER:
+                    spielfeld.start();
             }
         }
 
@@ -54,13 +54,13 @@ public class SpielFenster extends Frame {
         Punktzahl = new JLabel("Punkte:");
         Level = new JLabel("Level:");
         Reihen = new JLabel("Reihen:");
-        Punktzahl.setForeground(white);
-        Level.setForeground(white);
-        Reihen.setForeground(white);
+        Punktzahl.setForeground(Color.white);
+        Level.setForeground(Color.white);
+        Reihen.setForeground(Color.white);
         this.setResizable(false);
-        Punktzahl.setBounds(50, 55, 100, 10);
-        Level.setBounds(50, 75, 100, 10);
-        Reihen.setBounds(50, 95, 100, 10);
+        Punktzahl.setBounds(300, 250, 100, 10);
+        Level.setBounds(300, 275, 100, 10);
+        Reihen.setBounds(300, 300, 100, 10);
         this.add(Punktzahl);
         this.add(Level);
         this.add(Reihen);
@@ -68,8 +68,7 @@ public class SpielFenster extends Frame {
         this.add(new JLabel(""));
         this.addKeyListener(keyListener);
         spielfeld = new Spielfeld(10, 20);
-        this.setBackground(black);
-        spielfeld.setGraphics(this.getGraphics());
+        this.setBackground(Color.black);
         this.setSize(450, 560);
         this.setLocationRelativeTo(null);
 
@@ -83,6 +82,8 @@ public class SpielFenster extends Frame {
 
     public void Start() {
         this.setVisible(true);
+        spielfeld.setGraphics(this.getGraphics());
+
     }
 
 
