@@ -6,8 +6,10 @@ public class Block {
     private int x;
     private int y;
 
-    public Block(Colors color) {
+    public Block(Colors color, int x, int y) {
         this.color = color;
+        this.x = x;
+        this.y = y;
     }
 
     public Colors getColor() {

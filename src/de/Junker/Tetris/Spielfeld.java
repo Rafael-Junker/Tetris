@@ -1,41 +1,30 @@
 package de.Junker.Tetris;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
 public class Spielfeld {
+
     private int Level;
     private int Reihen;
     private int Punktzahl;
-    private int Höhe;
-    private int Breite;
     private Graphics graphics;
     private Block[][] spielfeld;
-    private Tetromino tetromino;
+    private Tetromino currentTetromino;
+    private Tetromino nextTetromino;
+    private Tetromino heldTetromino;
     private BufferedImage[] blockimage;
+    private Timer gameTimer;
+    private TetrominoBag bag;
 
-    public Spielfeld(int Breite, int Höhe) {
-        this.Breite = Breite;
-        this.Höhe = Höhe;
-    }
+    public Spielfeld() {
 
-    public int getLevel() {
-        return Level;
-    }
-
-    public int getPunktzahl() {
-        return Punktzahl;
-    }
-
-    public int getReihen() {
-        return Reihen;
-    }
-
-    public Graphics getGraphics() {
-        return graphics;
     }
 
     public void setGraphics(Graphics graphics) {
@@ -59,18 +48,20 @@ public class Spielfeld {
     }
 
     public void rotateClockwise() {
-
+        System.out.println("Rotating Clockwise");
     }
 
     public void rotateCounterclockwise() {
-
+        System.out.println("Rotating Counterclockeise");
     }
 
-    public void start() {
+    public void newGame() {
         Level = 1;
         Punktzahl = 0;
         Reihen = 0;
+
         spielfeld = new Block[10][20];
+
         System.out.println("Starte Spiel");
         try {
             BufferedImage image = ImageIO.read(ImageIO.class.getResource("/Tetris.png"));
@@ -81,27 +72,36 @@ public class Spielfeld {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error reading resources. Exiting now");
+            System.exit(1);
         }
-        Timer();
+
+        bag = new TetrominoBag();
+        currentTetromino = bag.getNext();
+
+        gameTimer = new Timer(500, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameTick();
+            }
+        });
+
+        gameTimer.start();
     }
 
     private void render() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 20; j++) {
                 if (spielfeld[i][j] == null) {
-                    drawBlocks(i, j, Colors.White);
+                    drawBlocks(i, j, Colors.empty);
                 } else {
                     drawBlocks(i, j, spielfeld[i][j].getColor());
-                    drawActiveTetromino();
+
                 }
             }
         }
-    }
-
-    private void Timer() {
-        //every time timer goes through one cycle
-        render();
-
+        drawActiveTetromino();
     }
 
     /*
@@ -130,19 +130,29 @@ public class Spielfeld {
             case Red:
                 graphics.drawImage(blockimage[6], posx * 25 + 25, posy * 25 + 30, null);
                 break;
-            case White:
+            case empty:
                 graphics.drawImage(blockimage[7], posx * 25 + 25, posy * 25 + 30, null);
                 break;
             default:
-                System.out.println("Attemted to draw invalid color");
+                //case for invalid color(should never be called)
+                System.out.println("Attempted to draw invalid color");
         }
     }
 
     private void drawActiveTetromino() {
-        for (Block b : tetromino.getBlocks()
+        for (Block b : currentTetromino.getBlocks()
                 ) {
             drawBlocks(b.getX(), b.getY(), b.getColor());
         }
+    }
+
+    public void pause() {
+        System.out.println("Pausing");
+    }
+
+    private void GameTick() {
+        render();
+        System.out.println("one tick passed");
     }
 }
 
