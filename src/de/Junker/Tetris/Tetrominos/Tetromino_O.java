@@ -6,18 +6,16 @@ import de.Junker.Tetris.Tetromino;
 
 public class Tetromino_O extends Tetromino {
 
-    Block[] blocks = {
-            new Block(Colors.Yellow, 4, 0),
-            new Block(Colors.Yellow, 4, 1),
-            new Block(Colors.Yellow, 5, 0),
-            new Block(Colors.Yellow, 5, 1)};
 
     public Tetromino_O() {
 
+        blocks = new Block[]{
+                new Block(Colors.Yellow, 4, 0),
+                new Block(Colors.Yellow, 4, 1),
+                new Block(Colors.Yellow, 5, 0),
+                new Block(Colors.Yellow, 5, 1)};
     }
 
-    @Override
-    public Block[] getBlocks() {
-        return blocks;
-    }
+
+
 }
