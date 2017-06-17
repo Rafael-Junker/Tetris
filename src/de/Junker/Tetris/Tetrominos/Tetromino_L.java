@@ -7,11 +7,32 @@ import de.Junker.Tetris.Tetromino;
 public class Tetromino_L extends Tetromino {
 
     public Tetromino_L() {
-        blocks = new Block[]{
-                new Block(Colors.Orange, 5, 0),
-                new Block(Colors.Orange, 3, 1),
-                new Block(Colors.Orange, 4, 1),
-                new Block(Colors.Orange, 5, 1)};
+        blocks = new Block[][]{
+                {
+                        new Block(Colors.Orange, 5, 0),
+                        new Block(Colors.Orange, 3, 1),
+                        new Block(Colors.Orange, 4, 1),
+                        new Block(Colors.Orange, 5, 1)
+                },
+                {
+                        new Block(Colors.Orange, 4, 0),
+                        new Block(Colors.Orange, 4, 1),
+                        new Block(Colors.Orange, 4, 2),
+                        new Block(Colors.Orange, 5, 2)
+                },
+                {
+                        new Block(Colors.Orange, 3, 2),
+                        new Block(Colors.Orange, 4, 1),
+                        new Block(Colors.Orange, 5, 1),
+                        new Block(Colors.Orange, 3, 1)
+                },
+                {
+                        new Block(Colors.Orange, 3, 0),
+                        new Block(Colors.Orange, 4, 0),
+                        new Block(Colors.Orange, 4, 1),
+                        new Block(Colors.Orange, 4, 2)
+                }
+        };
     }
 
 

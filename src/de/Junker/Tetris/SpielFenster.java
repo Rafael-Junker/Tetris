@@ -10,8 +10,8 @@ public class SpielFenster extends Frame {
     private final int softDrop = KeyEvent.VK_DOWN;
     private final int moveLeft = KeyEvent.VK_LEFT;
     private final int moveRight = KeyEvent.VK_RIGHT;
-    private final int rotateClockwise = KeyEvent.VK_A;
-    private final int rotateCounterClockwise = KeyEvent.VK_D;
+    private final int rotateClockwise = KeyEvent.VK_D;
+    private final int rotateCounterClockwise = KeyEvent.VK_A;
     private final int startGame = KeyEvent.VK_ENTER;
     private final int pauseGame = KeyEvent.VK_SPACE;
     private JLabel Punktzahl;
@@ -48,6 +48,7 @@ public class SpielFenster extends Frame {
                     spielfeld.rotateCounterclockwise();
                     break;
             }
+
         }
     };
     private int höhe = 560;

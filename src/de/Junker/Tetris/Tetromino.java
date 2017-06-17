@@ -1,20 +1,26 @@
 package de.Junker.Tetris;
 
 
-public class Tetromino {
+public abstract class Tetromino {
 
-    protected Block[] blocks;
+    protected Block[][] blocks;
+
+    private int rotationstate;
 
     public Block[] getBlocks() {
-        return blocks;
+        return blocks[rotationstate];
     }
 
     public boolean moveDown() {
         try {
-            for (Block b : blocks
+            for (Block[] t : blocks
                     ) {
-                b.setY(b.getY() + 1);
+                for (Block b : t
+                        ) {
+                    b.setY(b.getY() + 1);
+                }
             }
+
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
@@ -25,7 +31,7 @@ public class Tetromino {
     public boolean canMoveDown(Block[][] spielfeld) {
         boolean returnvalue = true;
         try {
-            for (Block b : blocks
+            for (Block b : blocks[rotationstate]
                     ) {
                 if (spielfeld[b.getX()][b.getY() + 1] != null) {
                     returnvalue = false;
@@ -41,10 +47,14 @@ public class Tetromino {
 
     public boolean moveLeft() {
         try {
-            for (Block b : blocks
+            for (Block[] t : blocks
                     ) {
-                b.setX(b.getX() - 1);
+                for (Block b : t
+                        ) {
+                    b.setX(b.getX() - 1);
+                }
             }
+
             return true;
         } catch (Exception e) {
             return false;
@@ -53,9 +63,12 @@ public class Tetromino {
 
     public boolean moveRight() {
         try {
-            for (Block b : blocks
+            for (Block[] t : blocks
                     ) {
-                b.setX(b.getX() + 1);
+                for (Block b : t
+                        ) {
+                    b.setX(b.getX() + 1);
+                }
             }
             return true;
         } catch (Exception e) {
@@ -66,7 +79,7 @@ public class Tetromino {
     public boolean canMoveLeft(Block[][] spielfeld) {
         boolean returnvalue = true;
         try {
-            for (Block b : blocks
+            for (Block b : blocks[rotationstate]
                     ) {
                 if (spielfeld[b.getX() - 1][b.getY()] != null) {
                     returnvalue = false;
@@ -84,7 +97,7 @@ public class Tetromino {
     public boolean canMoveRight(Block[][] spielfeld) {
         boolean returnvalue = true;
         try {
-            for (Block b : blocks
+            for (Block b : blocks[rotationstate]
                     ) {
                 if (spielfeld[b.getX() + 1][b.getY()] != null) {
                     returnvalue = false;
@@ -96,5 +109,17 @@ public class Tetromino {
         }
 
         return returnvalue;
+    }
+
+    public void rotateCounterClockwise() {
+        if (rotationstate - 1 == -1) {
+            rotationstate = 3;
+        } else {
+            rotationstate = (rotationstate - 1) % 4;
+        }
+    }
+
+    public void rotateClockwise() {
+        rotationstate = (rotationstate + 1) % 4;
     }
 }

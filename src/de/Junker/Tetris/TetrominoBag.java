@@ -3,6 +3,7 @@ package de.Junker.Tetris;
 import de.Junker.Tetris.Tetrominos.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TetrominoBag {
     private ArrayList<Tetromino> bag = new ArrayList<Tetromino>();
@@ -13,19 +14,17 @@ public class TetrominoBag {
     }
 
     public Tetromino getNext() {
-        Tetromino returnValue = null;
         try {
             bag.get(current_slot);
         } catch (IndexOutOfBoundsException e) {
             bag.clear();
             current_slot = 0;
             refill();
-            //Collections.shuffle(bag);
+            Collections.shuffle(bag);
             getNext();
         }
-        returnValue = bag.get(current_slot);
-        current_slot++;
-        return returnValue;
+        Tetromino returnvalue = bag.get(current_slot);
+        return returnvalue;
     }
 
     public void refill() {
@@ -36,5 +35,9 @@ public class TetrominoBag {
         bag.add(new Tetromino_S());
         bag.add(new Tetromino_Z());
         bag.add(new Tetromino_T());
+    }
+
+    public void increment() {
+        current_slot++;
     }
 }

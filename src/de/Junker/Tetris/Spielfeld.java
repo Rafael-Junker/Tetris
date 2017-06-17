@@ -59,11 +59,13 @@ public class Spielfeld {
     }
 
     public void rotateClockwise() {
-        System.out.println("Rotating Clockwise");
+        currentTetromino.rotateClockwise();
+        render();
     }
 
     public void rotateCounterclockwise() {
-        System.out.println("Rotating Counterclockeise");
+        currentTetromino.rotateCounterClockwise();
+        render();
     }
 
     public void newGame() {
@@ -87,6 +89,7 @@ public class Spielfeld {
 
         bag = new TetrominoBag();
         currentTetromino = bag.getNext();
+        bag.increment();
 
         if (gameTimer == null) {
             gameTimer = new Timer(500, new ActionListener() {
@@ -172,6 +175,7 @@ public class Spielfeld {
         } else {
             addBlocks(currentTetromino.getBlocks());
             currentTetromino = bag.getNext();
+            bag.increment();
         }
         render();
         System.out.println("one tick passed");

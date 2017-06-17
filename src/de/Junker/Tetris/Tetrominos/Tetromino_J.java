@@ -9,11 +9,32 @@ public class Tetromino_J extends Tetromino {
 
 
     public Tetromino_J() {
-        blocks = new Block[]{
-                new Block(Colors.Dark_blue, 3, 0),
-                new Block(Colors.Dark_blue, 3, 1),
-                new Block(Colors.Dark_blue, 4, 1),
-                new Block(Colors.Dark_blue, 5, 1)};
+        blocks = new Block[][]{
+                {
+                        new Block(Colors.Dark_blue, 3, 0),
+                        new Block(Colors.Dark_blue, 3, 1),
+                        new Block(Colors.Dark_blue, 4, 1),
+                        new Block(Colors.Dark_blue, 5, 1)
+                },
+                {
+                        new Block(Colors.Dark_blue, 4, 0),
+                        new Block(Colors.Dark_blue, 5, 0),
+                        new Block(Colors.Dark_blue, 4, 1),
+                        new Block(Colors.Dark_blue, 4, 2)
+                },
+                {
+                        new Block(Colors.Dark_blue, 5, 2),
+                        new Block(Colors.Dark_blue, 3, 1),
+                        new Block(Colors.Dark_blue, 4, 1),
+                        new Block(Colors.Dark_blue, 5, 1)
+                },
+                {
+                        new Block(Colors.Dark_blue, 4, 0),
+                        new Block(Colors.Dark_blue, 3, 2),
+                        new Block(Colors.Dark_blue, 4, 1),
+                        new Block(Colors.Dark_blue, 4, 2)
+                }
+        };
 
     }
 }

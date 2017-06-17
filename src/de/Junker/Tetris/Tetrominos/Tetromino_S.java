@@ -8,11 +8,32 @@ public class Tetromino_S extends Tetromino {
 
 
     public Tetromino_S() {
-        blocks = new Block[]{
-                new Block(Colors.Light_green, 4, 0),
-                new Block(Colors.Light_green, 5, 0),
-                new Block(Colors.Light_green, 3, 1),
-                new Block(Colors.Light_green, 4, 1)};
+        blocks = new Block[][]{
+                {
+                        new Block(Colors.Light_green, 4, 0),
+                        new Block(Colors.Light_green, 5, 0),
+                        new Block(Colors.Light_green, 3, 1),
+                        new Block(Colors.Light_green, 4, 1)
+                },
+                {
+                        new Block(Colors.Light_green, 4, 0),
+                        new Block(Colors.Light_green, 4, 1),
+                        new Block(Colors.Light_green, 5, 1),
+                        new Block(Colors.Light_green, 5, 2)
+                },
+                {
+                        new Block(Colors.Light_green, 4, 1),
+                        new Block(Colors.Light_green, 5, 1),
+                        new Block(Colors.Light_green, 3, 2),
+                        new Block(Colors.Light_green, 4, 2)
+                },
+                {
+                        new Block(Colors.Light_green, 3, 0),
+                        new Block(Colors.Light_green, 3, 1),
+                        new Block(Colors.Light_green, 4, 1),
+                        new Block(Colors.Light_green, 4, 2)
+                },
+        };
     }
 
 }
