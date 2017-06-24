@@ -11,8 +11,20 @@ public abstract class Tetromino {
         return blocks[rotationstate];
     }
 
-    public boolean moveDown() {
+    public boolean moveDown(Block[][] spielfeld) {
+        boolean valid = true;
         try {
+            for (Block b : blocks[rotationstate]
+                    ) {
+                if (spielfeld[b.getX()][b.getY() + 1] != null) {
+                    valid = false;
+                }
+            }
+
+        } catch (Exception e) {
+            valid = false;
+        }
+        if (valid) {
             for (Block[] t : blocks
                     ) {
                 for (Block b : t
@@ -20,33 +32,25 @@ public abstract class Tetromino {
                     b.setY(b.getY() + 1);
                 }
             }
-
-        } catch (IndexOutOfBoundsException e) {
-            return false;
         }
-        return false;
+        return valid;
     }
 
-
-    public boolean canMoveDown(Block[][] spielfeld) {
-        boolean returnvalue = true;
+    public boolean moveLeft(Block[][] spielfeld) {
+        boolean valid = true;
         try {
             for (Block b : blocks[rotationstate]
                     ) {
-                if (spielfeld[b.getX()][b.getY() + 1] != null) {
-                    returnvalue = false;
+                if (spielfeld[b.getX() - 1][b.getY()] != null) {
+                    valid = false;
                 }
             }
 
         } catch (Exception e) {
-            returnvalue = false;
+            valid = false;
         }
 
-        return returnvalue;
-    }
-
-    public boolean moveLeft() {
-        try {
+        if (valid) {
             for (Block[] t : blocks
                     ) {
                 for (Block b : t
@@ -54,15 +58,24 @@ public abstract class Tetromino {
                     b.setX(b.getX() - 1);
                 }
             }
-
-            return true;
-        } catch (Exception e) {
-            return false;
         }
+        return valid;
     }
 
-    public boolean moveRight() {
+    public boolean moveRight(Block[][] spielfeld) {
+        boolean valid = true;
         try {
+            for (Block b : blocks[rotationstate]
+                    ) {
+                if (spielfeld[b.getX() + 1][b.getY()] != null) {
+                    valid = false;
+                }
+            }
+
+        } catch (Exception e) {
+            valid = false;
+        }
+        if (valid) {
             for (Block[] t : blocks
                     ) {
                 for (Block b : t
@@ -70,56 +83,57 @@ public abstract class Tetromino {
                     b.setX(b.getX() + 1);
                 }
             }
-            return true;
-        } catch (Exception e) {
-            return false;
         }
+            return valid;
     }
 
-    public boolean canMoveLeft(Block[][] spielfeld) {
-        boolean returnvalue = true;
+
+    public boolean rotateCounterClockwise(Block[][] spielfeld) {
+        boolean valid = true;
         try {
-            for (Block b : blocks[rotationstate]
-                    ) {
-                if (spielfeld[b.getX() - 1][b.getY()] != null) {
-                    returnvalue = false;
+            if (rotationstate-1 == -1) {
+                for (Block block : blocks[3]) {
+                    if (spielfeld[block.getX()][block.getY()] != null) {
+                        valid = false;
+                    }
                 }
             }
-
-        } catch (Exception e) {
-            returnvalue = false;
-        }
-
-        return returnvalue;
-    }
-
-
-    public boolean canMoveRight(Block[][] spielfeld) {
-        boolean returnvalue = true;
-        try {
-            for (Block b : blocks[rotationstate]
-                    ) {
-                if (spielfeld[b.getX() + 1][b.getY()] != null) {
-                    returnvalue = false;
+            else {
+                for (Block block : blocks[rotationstate-1]) {
+                    if (spielfeld[block.getX()][block.getY()] != null) {
+                        valid = false;
+                    }
                 }
             }
-
-        } catch (Exception e) {
-            returnvalue = false;
         }
-
-        return returnvalue;
+        catch (Exception e) {
+            valid = false;
+        }
+        if (valid) {
+            if (rotationstate - 1 == -1) {
+                rotationstate = 3;
+            } else {
+                rotationstate = (rotationstate - 1);
+            }
+        }
+        return valid;
     }
 
-    public void rotateCounterClockwise() {
-        if (rotationstate - 1 == -1) {
-            rotationstate = 3;
-        } else {
-            rotationstate = (rotationstate - 1) % 4;
+    public boolean rotateClockwise(Block[][] spielfeld) {
+        boolean valid = true;
+        try {
+            for (Block block : blocks[(rotationstate+1) %4]) {
+                if (spielfeld[block.getX()][block.getY()] != null) {
+                    valid = false;
+                }
+            }
         }
-    }
-
-    public void rotateClockwise() {
-        rotationstate = (rotationstate + 1) % 4;
+        catch (Exception e) {
+            valid = false;
+        }
+        if (valid) {
+            rotationstate = (rotationstate + 1) % 4;
+        }
+        return valid;
     }
 }

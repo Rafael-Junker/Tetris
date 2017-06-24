@@ -32,21 +32,12 @@ public class Spielfeld {
     }
 
     public void moveLeft() {
-        if (currentTetromino.canMoveLeft(spielfeld)) {
-            currentTetromino.moveLeft();
-        } else {
-            System.out.println("can't move left");
-        }
+        currentTetromino.moveLeft(spielfeld);
         render();
     }
 
     public void moveRight() {
-        if (currentTetromino.canMoveRight(spielfeld)) {
-            currentTetromino.moveRight();
-        } else {
-            System.out.println("Can't move right");
-        }
-
+        currentTetromino.moveRight(spielfeld);
         render();
     }
 
@@ -59,12 +50,12 @@ public class Spielfeld {
     }
 
     public void rotateClockwise() {
-        currentTetromino.rotateClockwise();
+        currentTetromino.rotateClockwise(spielfeld);
         render();
     }
 
     public void rotateCounterclockwise() {
-        currentTetromino.rotateCounterClockwise();
+        currentTetromino.rotateCounterClockwise(spielfeld);
         render();
     }
 
@@ -163,15 +154,12 @@ public class Spielfeld {
         }
     }
 
-    //can move left right down check 30 min
-    //fix tetromino bag 10 min
     public void pause() {
         System.out.println("Pausing");
     }
 
     private void GameTick() {
-        if (currentTetromino.canMoveDown(spielfeld)) {
-            currentTetromino.moveDown();
+        if (currentTetromino.moveDown(spielfeld)) {
         } else {
             addBlocks(currentTetromino.getBlocks());
             currentTetromino = bag.getNext();
