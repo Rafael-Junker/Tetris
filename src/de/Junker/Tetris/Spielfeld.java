@@ -46,7 +46,8 @@ public class Spielfeld {
     }
 
     public void softDrop() {
-        System.out.println("Soft Dropping");
+        System.out.println(currentTetromino.moveDown(spielfeld));
+        render();
     }
 
     public void rotateClockwise() {
@@ -173,6 +174,7 @@ public class Spielfeld {
             nextTetromino = bag.getNext();
             bag.increment();
             clearRows();
+            GameOver();
         }
         render();
         System.out.println("one tick passed");
@@ -226,6 +228,16 @@ public class Spielfeld {
         for (Block b : tetromino
                 ) {
             spielfeld[b.getX()][b.getY()] = b;
+        }
+    }
+
+    private void GameOver() {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (spielfeld[j][i] != null) {
+                    System.out.println("Game Over!");
+                }
+            }
         }
     }
 }
