@@ -6,16 +6,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 
 public class Spielfeld {
+
+    private boolean paused;
+    private boolean gameOver;
 
     private int Level;
     private int Reihen;
     private int Punktzahl;
     private Graphics graphics;
-    private Block[][] spielfeld = new Block[10][22];
+    private Block[][] spielfeld;
     private Tetromino currentTetromino;
     private Tetromino nextTetromino;
     private Tetromino heldTetromino;
@@ -61,6 +63,7 @@ public class Spielfeld {
     }
 
     public void newGame() {
+        spielfeld = new Block[10][22];
         Level = 1;
         Punktzahl = 0;
         Reihen = 0;
@@ -73,8 +76,7 @@ public class Spielfeld {
                 blockimage[i] = image.getSubimage((i * 25), 0, 25, 25);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             System.out.println("Error reading resources. Exiting now");
             System.exit(1);
         }
@@ -86,7 +88,6 @@ public class Spielfeld {
 
         if (gameTimer == null) {
             gameTimer = new Timer(500, new ActionListener() {
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     GameTick();
@@ -173,7 +174,7 @@ public class Spielfeld {
             currentTetromino = nextTetromino;
             nextTetromino = bag.getNext();
             bag.increment();
-            clearRows();
+            addPoints(clearRows());
             GameOver();
         }
         render();
@@ -238,6 +239,29 @@ public class Spielfeld {
                     System.out.println("Game Over!");
                 }
             }
+        }
+    }
+
+    private void addPoints(int clearedLines) {
+        switch (clearedLines) {
+            case 1:
+                Punktzahl = Punktzahl + ((Level + 1) * 40);
+                Reihen = Reihen + clearedLines;
+                break;
+            case 2:
+                Punktzahl = Punktzahl + ((Level + 1) * 100);
+                Reihen = Reihen + clearedLines;
+                break;
+            case 3:
+                Punktzahl = Punktzahl + ((Level + 1) * 300);
+                Reihen = Reihen + clearedLines;
+                break;
+            case 4:
+                Punktzahl = Punktzahl + ((Level + 1) * 1200);
+                Reihen = Reihen + clearedLines;
+                break;
+            default:
+                return;
         }
     }
 }
