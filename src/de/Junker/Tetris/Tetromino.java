@@ -87,7 +87,6 @@ public abstract class Tetromino {
             return valid;
     }
 
-
     public boolean rotateCounterClockwise(Block[][] spielfeld) {
         boolean valid = true;
         try {
@@ -136,4 +135,6 @@ public abstract class Tetromino {
         }
         return valid;
     }
+
+    
 }

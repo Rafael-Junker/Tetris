@@ -80,6 +80,7 @@ public class Spielfeld {
 
         bag = new TetrominoBag();
         currentTetromino = bag.getNext();
+        nextTetromino = bag.getNext();
         bag.increment();
 
         if (gameTimer == null) {
@@ -97,6 +98,9 @@ public class Spielfeld {
     }
 
     private void render() {
+        /*
+           Draws all blocks on the gamefiled
+         */
         for (int i = 0; i < 10; i++) {
             for (int j = 2; j < 22; j++) {
                 if (spielfeld[i][j] == null) {
@@ -107,6 +111,9 @@ public class Spielfeld {
                 }
             }
         }
+        /*
+            Draw active Tetromino
+         */
         drawActiveTetromino();
     }
 
@@ -162,11 +169,57 @@ public class Spielfeld {
         if (currentTetromino.moveDown(spielfeld)) {
         } else {
             addBlocks(currentTetromino.getBlocks());
-            currentTetromino = bag.getNext();
+            currentTetromino = nextTetromino;
+            nextTetromino = bag.getNext();
             bag.increment();
+            clearRows();
         }
         render();
         System.out.println("one tick passed");
+    }
+
+    private int clearRows() {
+        int linescleared =0;
+        for (int column = 0; column < 22; column++) {
+
+            int Blocksinrow = 0;
+
+            for (int row = 0; row < 10; row++) {
+                if (spielfeld[row][column] != null) {
+                    Blocksinrow++;
+                }
+            }
+            if (Blocksinrow ==10) {
+                for (int row = 0; row < 10; row++) {
+                    spielfeld[row][column] = null;
+                }
+                linescleared++;
+            }
+        }
+        compactRows();
+        return linescleared;
+    }
+
+    private void compactRows(){
+        Block[][] newField = new Block[10][22];
+        int newFieldrow = 21;
+
+        for (int row = 21; row > 0; row--) {
+            int Blocksinrow = 0;
+            for (int column = 0; column < 10; column++) {
+                if (spielfeld[column][row] != null) {
+                    Blocksinrow++;
+                }
+            }
+            if (Blocksinrow != 0) {
+                for (int column = 0; column < 10; column++) {
+                    newField[column][newFieldrow] = spielfeld[column][row];
+                }
+                newFieldrow--;
+            }
+
+        }
+        spielfeld = newField;
     }
 
     private void addBlocks(Block[] tetromino) {
