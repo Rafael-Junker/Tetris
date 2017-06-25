@@ -7,8 +7,6 @@ import de.Junker.Tetris.Tetromino;
 
 public class Tetromino_I extends Tetromino {
 
-
-
     public Tetromino_I() {
         blocks = new Block[][]{
                 {
