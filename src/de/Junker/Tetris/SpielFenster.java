@@ -13,7 +13,6 @@ public class SpielFenster extends Frame {
     private final int rotateClockwise = KeyEvent.VK_D;
     private final int rotateCounterClockwise = KeyEvent.VK_A;
     private final int startGame = KeyEvent.VK_ENTER;
-    private final int pauseGame = KeyEvent.VK_SPACE;
     private JLabel Punktzahl;
     private JLabel Level;
     private JLabel Reihen;
@@ -36,10 +35,7 @@ public class SpielFenster extends Frame {
                     spielfeld.softDrop();
                     break;
                 case startGame:
-                    spielfeld.newGame();
-                    break;
-                case pauseGame:
-                    spielfeld.pause();
+                    spielfeld.Enter();
                     break;
                 case rotateClockwise:
                     spielfeld.rotateClockwise();

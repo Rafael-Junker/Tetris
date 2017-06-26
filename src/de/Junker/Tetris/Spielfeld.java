@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class Spielfeld {
 
-    private boolean paused;
-    private boolean gameOver;
+    private boolean paused = false;
+    private boolean gameRunning = false;
 
     private int Level;
     private int Reihen;
@@ -52,6 +52,14 @@ public class Spielfeld {
         render();
     }
 
+    public void Enter() {
+        if (!gameRunning) {
+            newGame();
+        } else {
+            pause();
+        }
+    }
+
     public void rotateClockwise() {
         currentTetromino.rotateClockwise(spielfeld);
         render();
@@ -62,7 +70,18 @@ public class Spielfeld {
         render();
     }
 
+    public void pause() {
+        if (!paused) {
+            gameTimer.stop();
+            paused = !paused;
+        } else {
+            gameTimer.start();
+            paused = !paused;
+        }
+    }
+
     public void newGame() {
+        gameRunning = true;
         spielfeld = new Block[10][22];
         Level = 1;
         Punktzahl = 0;
@@ -163,10 +182,6 @@ public class Spielfeld {
         }
     }
 
-    public void pause() {
-        System.out.println("Pausing");
-    }
-
     private void GameTick() {
         if (currentTetromino.moveDown(spielfeld)) {
         } else {
@@ -236,7 +251,9 @@ public class Spielfeld {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 10; j++) {
                 if (spielfeld[j][i] != null) {
-                    System.out.println("Game Over!");
+                    gameRunning = false;
+                    gameTimer.stop();
+                    Scores.addScore(Punktzahl);
                 }
             }
         }
