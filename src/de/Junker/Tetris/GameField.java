@@ -8,16 +8,16 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 
-public class Spielfeld {
+public class GameField {
 
     private boolean paused = false;
     private boolean gameRunning = false;
 
     private int Level;
-    private int Reihen;
-    private int Punktzahl;
+    private int Rows;
+    private int Points;
     private Graphics graphics;
-    private Block[][] spielfeld;
+    private Block[][] gameField;
     private Tetromino currentTetromino;
     private Tetromino nextTetromino;
     private Tetromino heldTetromino;
@@ -25,7 +25,7 @@ public class Spielfeld {
     private Timer gameTimer;
     private TetrominoBag bag;
 
-    public Spielfeld() {
+    public GameField() {
 
     }
 
@@ -34,12 +34,12 @@ public class Spielfeld {
     }
 
     public void moveLeft() {
-        currentTetromino.moveLeft(spielfeld);
+        currentTetromino.moveLeft(gameField);
         render();
     }
 
     public void moveRight() {
-        currentTetromino.moveRight(spielfeld);
+        currentTetromino.moveRight(gameField);
         render();
     }
 
@@ -48,7 +48,7 @@ public class Spielfeld {
     }
 
     public void softDrop() {
-        System.out.println(currentTetromino.moveDown(spielfeld));
+        System.out.println(currentTetromino.moveDown(gameField));
         render();
     }
 
@@ -61,12 +61,12 @@ public class Spielfeld {
     }
 
     public void rotateClockwise() {
-        currentTetromino.rotateClockwise(spielfeld);
+        currentTetromino.rotateClockwise(gameField);
         render();
     }
 
     public void rotateCounterclockwise() {
-        currentTetromino.rotateCounterClockwise(spielfeld);
+        currentTetromino.rotateCounterClockwise(gameField);
         render();
     }
 
@@ -82,14 +82,14 @@ public class Spielfeld {
 
     public void newGame() {
         gameRunning = true;
-        spielfeld = new Block[10][22];
+        gameField = new Block[10][22];
         Level = 1;
-        Punktzahl = 0;
-        Reihen = 0;
+        Points = 0;
+        Rows = 0;
 
         System.out.println("Starte Spiel");
         try {
-            BufferedImage image = ImageIO.read(ImageIO.class.getResource("/Tetris.png"));
+            BufferedImage image = ImageIO.read(ImageIO.class.getResource("/de/Junker/Tetris/Tetris.png"));
             blockimage = new BufferedImage[8];
             for (int i = 0; i < 8; i++) {
                 blockimage[i] = image.getSubimage((i * 25), 0, 25, 25);
@@ -124,10 +124,10 @@ public class Spielfeld {
          */
         for (int i = 0; i < 10; i++) {
             for (int j = 2; j < 22; j++) {
-                if (spielfeld[i][j] == null) {
+                if (gameField[i][j] == null) {
                     drawBlocks(i, j, Colors.empty);
                 } else {
-                    drawBlocks(i, j, spielfeld[i][j].getColor());
+                    drawBlocks(i, j, gameField[i][j].getColor());
 
                 }
             }
@@ -183,15 +183,14 @@ public class Spielfeld {
     }
 
     private void GameTick() {
-        if (currentTetromino.moveDown(spielfeld)) {
-        } else {
+        if (!currentTetromino.moveDown(gameField)) {
             addBlocks(currentTetromino.getBlocks());
             gameTimer.setDelay(1000 - ((Level - 1)) * 50);
             currentTetromino = nextTetromino;
             nextTetromino = bag.getNext();
             bag.increment();
             addPoints(clearRows());
-            Level = (Reihen / 10) + 1;
+            Level = (Rows / 10) + 1;
             GameOver();
         }
         render();
@@ -205,13 +204,13 @@ public class Spielfeld {
             int Blocksinrow = 0;
 
             for (int row = 0; row < 10; row++) {
-                if (spielfeld[row][column] != null) {
+                if (gameField[row][column] != null) {
                     Blocksinrow++;
                 }
             }
             if (Blocksinrow ==10) {
                 for (int row = 0; row < 10; row++) {
-                    spielfeld[row][column] = null;
+                    gameField[row][column] = null;
                 }
                 linescleared++;
             }
@@ -227,32 +226,32 @@ public class Spielfeld {
         for (int row = 21; row > 0; row--) {
             int Blocksinrow = 0;
             for (int column = 0; column < 10; column++) {
-                if (spielfeld[column][row] != null) {
+                if (gameField[column][row] != null) {
                     Blocksinrow++;
                 }
             }
             if (Blocksinrow != 0) {
                 for (int column = 0; column < 10; column++) {
-                    newField[column][newFieldrow] = spielfeld[column][row];
+                    newField[column][newFieldrow] = gameField[column][row];
                 }
                 newFieldrow--;
             }
 
         }
-        spielfeld = newField;
+        gameField = newField;
     }
 
     private void addBlocks(Block[] tetromino) {
         for (Block b : tetromino
                 ) {
-            spielfeld[b.getX()][b.getY()] = b;
+            gameField[b.getX()][b.getY()] = b;
         }
     }
 
     private void GameOver() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 10; j++) {
-                if (spielfeld[j][i] != null) {
+                if (gameField[j][i] != null) {
                     gameRunning = false;
                     gameTimer.stop();
                 }
@@ -263,23 +262,22 @@ public class Spielfeld {
     private void addPoints(int clearedLines) {
         switch (clearedLines) {
             case 1:
-                Punktzahl = Punktzahl + ((Level + 1) * 40);
-                Reihen = Reihen + clearedLines;
+                Points = Points + ((Level + 1) * 40);
+                Rows = Rows + clearedLines;
                 break;
             case 2:
-                Punktzahl = Punktzahl + ((Level + 1) * 100);
-                Reihen = Reihen + clearedLines;
+                Points = Points + ((Level + 1) * 100);
+                Rows = Rows + clearedLines;
                 break;
             case 3:
-                Punktzahl = Punktzahl + ((Level + 1) * 300);
-                Reihen = Reihen + clearedLines;
+                Points = Points + ((Level + 1) * 300);
+                Rows = Rows + clearedLines;
                 break;
             case 4:
-                Punktzahl = Punktzahl + ((Level + 1) * 1200);
-                Reihen = Reihen + clearedLines;
+                Points = Points + ((Level + 1) * 1200);
+                Rows = Rows + clearedLines;
                 break;
             default:
-                return;
         }
     }
 
@@ -287,12 +285,12 @@ public class Spielfeld {
         return Level;
     }
 
-    public int getPunktzahl() {
-        return Punktzahl;
+    public int getPoints() {
+        return Points;
     }
 
-    public int getReihen() {
-        return Reihen;
+    public int getRows() {
+        return Rows;
     }
 }
 

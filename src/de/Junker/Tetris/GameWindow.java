@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SpielFenster extends Frame {
+public class GameWindow extends Frame {
 
     private final int hardDrop = KeyEvent.VK_UP;
     private final int softDrop = KeyEvent.VK_DOWN;
@@ -13,83 +13,83 @@ public class SpielFenster extends Frame {
     private final int rotateClockwise = KeyEvent.VK_D;
     private final int rotateCounterClockwise = KeyEvent.VK_A;
     private final int startGame = KeyEvent.VK_ENTER;
-    private JLabel Punktzahl;
+    private JLabel Points;
     private JLabel Level;
-    private JLabel Reihen;
-    private Spielfeld spielfeld;
+    private JLabel Rows;
+    private GameField gamefield;
     KeyListener keyListener = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             switch (keyEvent.getKeyCode()) {
                 case moveLeft:
-                    spielfeld.moveLeft();
+                    gamefield.moveLeft();
                     break;
                 case moveRight:
-                    spielfeld.moveRight();
+                    gamefield.moveRight();
                     break;
                 case hardDrop:
-                    spielfeld.hardDrop();
+                    gamefield.hardDrop();
                     break;
                 case softDrop:
-                    spielfeld.softDrop();
+                    gamefield.softDrop();
                     break;
                 case startGame:
-                    spielfeld.Enter();
+                    gamefield.Enter();
                     break;
                 case rotateClockwise:
-                    spielfeld.rotateClockwise();
+                    gamefield.rotateClockwise();
                     break;
                 case rotateCounterClockwise:
-                    spielfeld.rotateCounterclockwise();
+                    gamefield.rotateCounterclockwise();
                     break;
             }
 
         }
     };
-    private int höhe = 560;
-    private int breite = 450;
+    private int Height = 560;
+    private int Width = 450;
     private Color background_color = Color.black;
     private Color font_color = Color.white;
 
 
-    public SpielFenster() {
+    public GameWindow() {
         //Call to super to set Window Name
         super("Tetris");
         //Adding of Text Labels
-        Punktzahl = new JLabel("Punkte:");
+        Points = new JLabel("Punkte:");
         Level = new JLabel("Level:");
-        Reihen = new JLabel("Reihen:");
+        Rows = new JLabel("Reihen:");
         //Setting the font color
-        Punktzahl.setForeground(font_color);
+        Points.setForeground(font_color);
         Level.setForeground(font_color);
-        Reihen.setForeground(font_color);
+        Rows.setForeground(font_color);
         //Disable resizing
         this.setResizable(false);
         //Setiing the possition of the Labels
-        Punktzahl.setBounds(300, 250, 100, 10);
+        Points.setBounds(300, 250, 100, 10);
         Level.setBounds(300, 275, 100, 10);
-        Reihen.setBounds(300, 300, 100, 10);
+        Rows.setBounds(300, 300, 100, 10);
         //Adding the labels to the frame
-        this.add(Punktzahl);
+        this.add(Points);
         this.add(Level);
-        this.add(Reihen);
+        this.add(Rows);
         //empty label because the last label doesn't take any position
         this.add(new JLabel(""));
         //Add the key Listener to the frame
         this.addKeyListener(keyListener);
         //initialize the playing field
-        spielfeld = new Spielfeld();
+        gamefield = new GameField();
         //set the background color color to
         this.setBackground(background_color);
         //set the size of the window
-        this.setSize(breite, höhe);
+        this.setSize(Width, Height);
         //center the window
         this.setLocationRelativeTo(null);
         Timer updateTimer = new Timer(100, e -> {
-            Punktzahl.setText("Punkte: " + spielfeld.getPunktzahl());
-            Level.setText("Level: " + spielfeld.getLevel());
-            Reihen.setText("Reihen: " + spielfeld.getReihen());
+            Points.setText("Punkte: " + gamefield.getPoints());
+            Level.setText("Level: " + gamefield.getLevel());
+            Rows.setText("Reihen: " + gamefield.getRows());
         });
         updateTimer.start();
         //close function if close symbol i clicked
@@ -105,7 +105,7 @@ public class SpielFenster extends Frame {
         //draw the frame
         this.setVisible(true);
         //pass the graphics of the frame to the playfield for modification
-        spielfeld.setGraphics(this.getGraphics());
+        gamefield.setGraphics(this.getGraphics());
 
     }
 }

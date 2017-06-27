@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TetrominoBag {
-    private ArrayList<Tetromino> bag = new ArrayList<Tetromino>();
+    private ArrayList<Tetromino> bag = new ArrayList<>();
     private int current_slot = 0;
 
     public TetrominoBag() {
