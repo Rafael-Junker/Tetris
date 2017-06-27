@@ -106,7 +106,7 @@ public class Spielfeld {
         bag.increment();
 
         if (gameTimer == null) {
-            gameTimer = new Timer(500, new ActionListener() {
+            gameTimer = new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     GameTick();
@@ -186,10 +186,12 @@ public class Spielfeld {
         if (currentTetromino.moveDown(spielfeld)) {
         } else {
             addBlocks(currentTetromino.getBlocks());
+            gameTimer.setDelay(1000 - ((Level - 1)) * 50);
             currentTetromino = nextTetromino;
             nextTetromino = bag.getNext();
             bag.increment();
             addPoints(clearRows());
+            Level = (Reihen / 10) + 1;
             GameOver();
         }
         render();
@@ -253,7 +255,6 @@ public class Spielfeld {
                 if (spielfeld[j][i] != null) {
                     gameRunning = false;
                     gameTimer.stop();
-                    Scores.addScore(Punktzahl);
                 }
             }
         }
