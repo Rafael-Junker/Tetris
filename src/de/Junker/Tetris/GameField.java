@@ -20,7 +20,6 @@ public class GameField {
     private Block[][] gameField;
     private Tetromino currentTetromino;
     private Tetromino nextTetromino;
-    private Tetromino heldTetromino;
     private BufferedImage[] blockimage;
     private Timer gameTimer;
     private TetrominoBag bag;

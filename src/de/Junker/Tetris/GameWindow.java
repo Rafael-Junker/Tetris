@@ -86,6 +86,7 @@ public class GameWindow extends Frame {
         this.setSize(Width, Height);
         //center the window
         this.setLocationRelativeTo(null);
+        //Update Labels on the screen
         Timer updateTimer = new Timer(100, e -> {
             Points.setText("Punkte: " + gamefield.getPoints());
             Level.setText("Level: " + gamefield.getLevel());
