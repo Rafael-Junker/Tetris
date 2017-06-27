@@ -8,6 +8,7 @@ import de.Junker.Tetris.Tetromino;
 public class Tetromino_I extends Tetromino {
 
     public Tetromino_I() {
+        //initializes the shape for all rotationstates of the tetromino
         blocks = new Block[][]{
                 {
                         new Block(Colors.Light_blue, 3, 1),

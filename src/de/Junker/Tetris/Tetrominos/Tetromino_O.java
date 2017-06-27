@@ -8,7 +8,7 @@ public class Tetromino_O extends Tetromino {
 
 
     public Tetromino_O() {
-
+        //initializes the shape for all rotationstates of the tetromino
         blocks = new Block[][]{
                 {
                         new Block(Colors.Yellow, 4, 0),

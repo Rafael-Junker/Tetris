@@ -7,6 +7,7 @@ import de.Junker.Tetris.Tetromino;
 public class Tetromino_L extends Tetromino {
 
     public Tetromino_L() {
+        //initializes the shape for all rotationstates of the tetromino
         blocks = new Block[][]{
                 {
                         new Block(Colors.Orange, 5, 0),

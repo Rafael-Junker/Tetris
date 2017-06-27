@@ -8,6 +8,7 @@ public class Tetromino_Z extends Tetromino {
 
 
     public Tetromino_Z() {
+        //initializes the shape for all rotationstates of the tetromino
         blocks = new Block[][]{
                 {
                         new Block(Colors.Red, 3, 0),

@@ -2,15 +2,17 @@ package de.Junker.Tetris;
 
 
 public abstract class Tetromino {
-
+    //Shape of the Tetromino in all rotationstates as array
     protected Block[][] blocks;
-
+    //currently active rotation of tetromino
     private int rotationstate;
 
+    //gets the current block positions of the Tetromino
     public Block[] getBlocks() {
         return blocks[rotationstate];
     }
 
+    //moves the Tetromino down if possible
     public boolean moveDown(Block[][] gameField) {
         boolean valid = true;
         try {
@@ -36,6 +38,7 @@ public abstract class Tetromino {
         return valid;
     }
 
+    //moves the Tetromino Left if possible
     public boolean moveLeft(Block[][] gameField) {
         boolean valid = true;
         try {
@@ -62,6 +65,7 @@ public abstract class Tetromino {
         return valid;
     }
 
+    //moves the Tetromino Right if possible
     public boolean moveRight(Block[][] gameField) {
         boolean valid = true;
         try {
@@ -87,6 +91,7 @@ public abstract class Tetromino {
             return valid;
     }
 
+    //Rotates the Tetromino Counterclockise if possible
     public boolean rotateCounterClockwise(Block[][] GameField) {
         boolean valid = true;
         try {
@@ -118,6 +123,7 @@ public abstract class Tetromino {
         return valid;
     }
 
+    //Rotates the Tetromino clockwise if possible
     public boolean rotateClockwise(Block[][] gameField) {
         boolean valid = true;
         try {
@@ -135,6 +141,4 @@ public abstract class Tetromino {
         }
         return valid;
     }
-
-    
 }

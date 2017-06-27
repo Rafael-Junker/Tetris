@@ -13,6 +13,8 @@ public class TetrominoBag {
 
     }
 
+    //Gets the next tetromino in the queue
+    //Creates a new bag if the new bag is used up
     public Tetromino getNext() {
         try {
             bag.get(current_slot);
@@ -27,6 +29,7 @@ public class TetrominoBag {
         return returnvalue;
     }
 
+    //adds one Tetromino of each type to the bag
     public void refill() {
         bag.add(new Tetromino_L());
         bag.add(new Tetromino_J());
@@ -37,6 +40,7 @@ public class TetrominoBag {
         bag.add(new Tetromino_T());
     }
 
+    //increments the position of the bag
     public void increment() {
         current_slot++;
     }

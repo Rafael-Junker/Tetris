@@ -9,6 +9,7 @@ public class Tetromino_J extends Tetromino {
 
 
     public Tetromino_J() {
+        //initializes the shape for all rotationstates of the tetromino
         blocks = new Block[][]{
                 {
                         new Block(Colors.Dark_blue, 3, 0),

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GameWindow extends Frame {
-
+    //Set keybinds as constant
     private final int hardDrop = KeyEvent.VK_UP;
     private final int softDrop = KeyEvent.VK_DOWN;
     private final int moveLeft = KeyEvent.VK_LEFT;
@@ -13,10 +13,13 @@ public class GameWindow extends Frame {
     private final int rotateClockwise = KeyEvent.VK_D;
     private final int rotateCounterClockwise = KeyEvent.VK_A;
     private final int startGame = KeyEvent.VK_ENTER;
+    //Labels for game Data
     private JLabel Points;
     private JLabel Level;
     private JLabel Rows;
+    //The class for the main game
     private GameField gamefield;
+    //Keylistener to controll game
     KeyListener keyListener = new KeyAdapter() {
 
         @Override
@@ -47,12 +50,14 @@ public class GameWindow extends Frame {
 
         }
     };
+    //define size of the window
     private int Height = 560;
     private int Width = 450;
+    //define Background and Font color
     private Color background_color = Color.black;
     private Color font_color = Color.white;
 
-
+    //Constructor for the main window
     public GameWindow() {
         //Call to super to set Window Name
         super("Tetris");
@@ -66,7 +71,7 @@ public class GameWindow extends Frame {
         Rows.setForeground(font_color);
         //Disable resizing
         this.setResizable(false);
-        //Setiing the possition of the Labels
+        //Seting the possition of the Labels
         Points.setBounds(300, 250, 100, 10);
         Level.setBounds(300, 275, 100, 10);
         Rows.setBounds(300, 300, 100, 10);
@@ -93,7 +98,7 @@ public class GameWindow extends Frame {
             Rows.setText("Reihen: " + gamefield.getRows());
         });
         updateTimer.start();
-        //close function if close symbol i clicked
+        //close function if close symbol is clicked
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {

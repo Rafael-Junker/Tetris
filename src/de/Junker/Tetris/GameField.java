@@ -9,48 +9,60 @@ import java.awt.image.BufferedImage;
 
 
 public class GameField {
-
+    //Values to check the state of the game
     private boolean paused = false;
     private boolean gameRunning = false;
-
+    //Game data
     private int Level;
     private int Rows;
     private int Points;
+    //Graphics of the Window
     private Graphics graphics;
+    //Tetris field as a 2d array of Blocks
     private Block[][] gameField;
+    //current and next tetromino
     private Tetromino currentTetromino;
     private Tetromino nextTetromino;
+    //graphics for all colored blocks
     private BufferedImage[] blockimage;
+    //Timer to update game on regular intervalls
     private Timer gameTimer;
+    //current order of tetrominos
     private TetrominoBag bag;
 
     public GameField() {
 
     }
 
+    //Function to get window graphics to show the field on screen
     public void setGraphics(Graphics graphics) {
         this.graphics = graphics;
     }
 
+    //Function to move the Tetromino Left
     public void moveLeft() {
         currentTetromino.moveLeft(gameField);
         render();
     }
 
+    //Function to move the Tetromino Right
     public void moveRight() {
         currentTetromino.moveRight(gameField);
         render();
     }
 
+    //Function to hard drop Tetromino (Not yet implemented)
     public void hardDrop() {
         System.out.println("Hard drop");
     }
 
+    //Function to speed up dropping of tetromino
     public void softDrop() {
         System.out.println(currentTetromino.moveDown(gameField));
         render();
     }
 
+    //Function to determine if game should start or Pause/Unpause
     public void Enter() {
         if (!gameRunning) {
             newGame();
@@ -59,16 +71,19 @@ public class GameField {
         }
     }
 
+    //Function to rotate the Tetromino clockwise
     public void rotateClockwise() {
         currentTetromino.rotateClockwise(gameField);
         render();
     }
 
+    //function to rotate the tetromino counterclockwise
     public void rotateCounterclockwise() {
         currentTetromino.rotateCounterClockwise(gameField);
         render();
     }
 
+    //function to pause the game
     public void pause() {
         if (!paused) {
             gameTimer.stop();
@@ -79,6 +94,7 @@ public class GameField {
         }
     }
 
+    //Function to start a fresh game
     public void newGame() {
         gameRunning = true;
         gameField = new Block[10][22];
@@ -117,6 +133,7 @@ public class GameField {
         }
     }
 
+    //Function to render all current game objects
     private void render() {
         /*
            Draws all blocks on the gamefiled
@@ -140,6 +157,8 @@ public class GameField {
     /*
     Prints the Block with the right color on x*25 y*25 (with 25 px buffer left and 30px buffer top/bottom)
      */
+
+    //Function to draw an individual block
     private void drawBlocks(int posx, int posy, Colors color) {
         switch (color) {
             case Light_blue:
@@ -172,6 +191,7 @@ public class GameField {
         }
     }
 
+    //Function to draw the current Tetromino
     private void drawActiveTetromino() {
         for (Block b : currentTetromino.getBlocks()
                 ) {
@@ -181,6 +201,7 @@ public class GameField {
         }
     }
 
+    //Function for repeated game functions
     private void GameTick() {
         if (!currentTetromino.moveDown(gameField)) {
             addBlocks(currentTetromino.getBlocks());
@@ -196,6 +217,7 @@ public class GameField {
         System.out.println("one tick passed");
     }
 
+    //clear completed rows and add them to cleared rows counter
     private int clearRows() {
         int linescleared =0;
         for (int column = 0; column < 22; column++) {
@@ -218,6 +240,7 @@ public class GameField {
         return linescleared;
     }
 
+    //function to drop a row if there is an empty row beneath
     private void compactRows(){
         Block[][] newField = new Block[10][22];
         int newFieldrow = 21;
@@ -240,6 +263,7 @@ public class GameField {
         gameField = newField;
     }
 
+    //function to fix the tetromino to the game field
     private void addBlocks(Block[] tetromino) {
         for (Block b : tetromino
                 ) {
@@ -247,6 +271,7 @@ public class GameField {
         }
     }
 
+    //check for game over and handle it
     private void GameOver() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 10; j++) {
@@ -258,6 +283,7 @@ public class GameField {
         }
     }
 
+    //Point manager
     private void addPoints(int clearedLines) {
         switch (clearedLines) {
             case 1:
@@ -280,6 +306,7 @@ public class GameField {
         }
     }
 
+    //Getter
     public int getLevel() {
         return Level;
     }
