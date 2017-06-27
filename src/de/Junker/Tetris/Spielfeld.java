@@ -281,5 +281,17 @@ public class Spielfeld {
                 return;
         }
     }
+
+    public int getLevel() {
+        return Level;
+    }
+
+    public int getPunktzahl() {
+        return Punktzahl;
+    }
+
+    public int getReihen() {
+        return Reihen;
+    }
 }
 

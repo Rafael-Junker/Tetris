@@ -86,6 +86,12 @@ public class SpielFenster extends Frame {
         this.setSize(breite, höhe);
         //center the window
         this.setLocationRelativeTo(null);
+        Timer updateTimer = new Timer(100, e -> {
+            Punktzahl.setText("Punkte: " + spielfeld.getPunktzahl());
+            Level.setText("Level: " + spielfeld.getLevel());
+            Reihen.setText("Reihen: " + spielfeld.getReihen());
+        });
+        updateTimer.start();
         //close function if close symbol i clicked
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -100,5 +106,6 @@ public class SpielFenster extends Frame {
         this.setVisible(true);
         //pass the graphics of the frame to the playfield for modification
         spielfeld.setGraphics(this.getGraphics());
+
     }
 }
